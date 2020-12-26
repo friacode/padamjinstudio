@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppRouter from "components/Reouter";
 import { authService } from "fbase";
 
 function App(){
-  const [isLoggedIn, setIsLoggedin] = useState(authService.currentUser);
+  const [init, setInit] = useState(false);
+  const [isLoggedIn, setIsLoggedin] = useState(false);
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      if(user) {
+        setIsLoggedin(true);
+      } else {
+        setIsLoggedin(false);
+      }
+      setInit(true);
+    });
+  }, []);
   return (
     <>
-      <AppRouter isLoggedIn={isLoggedIn}/>
+      {init ? <AppRouter isLoggedIn={isLoggedIn}/> : "Initializing..."}
       <footer>&copy; PadamJIN Studio {new Date().getFullYear()}</footer>
     </>
   );
