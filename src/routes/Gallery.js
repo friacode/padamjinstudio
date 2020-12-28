@@ -25,7 +25,7 @@ const Gallery = () => {
         return (
           <div key={item.id}>  
             <h4>{item.subject}</h4>
-            <img src={item.url} alt={item.subject} />
+            <img src={item.url} alt={item.subject} width="200" />
           </div>
         );
       })}
